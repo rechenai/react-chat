@@ -1,3 +1,5 @@
+// C:\Program Files\MongoDB\Server\3.4\bin\mongod.exe
+
 const mongoose = require('mongoose')
 const DB_URL = 'mongodb://localhost:27017/chat'
 mongoose.connect(DB_URL)

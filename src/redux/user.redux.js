@@ -5,7 +5,6 @@ const initState = {
   isAuth: false,
   user: '',
   pwd: '',
-  repeatPwd: '',
   errMsg: '',
   type: ''
 }
