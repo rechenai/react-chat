@@ -39,6 +39,7 @@ export function register({user, pwd, repeatPwd, type}) {
     return errorMsg('密码与确认密码不同')
   }
   return dispatch => {
+    console.log('dispatch', dispatch)
     axios.post('/user/register', {user, pwd, repeatPwd, type})
       .then(res => {
         if (res.status === 200 && res.data.code === 0) {

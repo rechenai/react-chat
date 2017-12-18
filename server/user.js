@@ -13,6 +13,7 @@ Router.get('/list', function (req, res) {
 
 Router.post('/register', function (req, res) {
   const {user, pwd, type} = req.body
+  console.log('req.body', req.body)
   User.findOne({user: user}, function (err, doc) {
     if (doc) {
       return res.json({code: 1, errMsg: '用户名重复'})
