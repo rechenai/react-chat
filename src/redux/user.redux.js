@@ -14,6 +14,7 @@ const initState = {
 const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
 const ERROR_MSG = 'ERROR_MSG'
 const LOGIN_SUCCESS = "LOGIN_SUCCESS"
+const LOAD_DATA = 'LOAD_DATA'
 
 export function user(state=initState, action) {
   switch(action.type) {
@@ -23,7 +24,9 @@ export function user(state=initState, action) {
       return { ...state, isAuth: true, redirectTo: utils.getRedirectPath(action.payload), errMsg: "", ...action.payload }
     case ERROR_MSG: 
       return { ...state, isAuth: false, errMsg: action.errMsg}
-    default:
+    case LOAD_DATA:
+      return {...state, ...action.payload}
+      default:
       return state
   }
 }
@@ -38,6 +41,10 @@ function registerSuccess(data) {
 
 function loginSuccess(data) {
   return {type: LOGIN_SUCCESS, payload: data}
+}
+
+export function loadData(data) {
+  return { type: LOAD_DATA , payload: data};
 }
 
 export function login ({user, pwd}) {

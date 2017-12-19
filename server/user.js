@@ -4,6 +4,8 @@ const model = require('./model')
 const User = model.getModel('user')
 const utils = require('utility')
 
+const _filter = {'pwd': 0, '__v': 0}
+
 function getMD5Pwd (pwd) {
   const salt = 'chat'
   return utils.md5(utils.md5(pwd + salt))
@@ -19,13 +21,18 @@ Router.get('/list', function (req, res) {
 
 Router.post('/login', function (req, res) {
   const {user, pwd} = req.body
-  User.findOne({user: user, pwd: getMD5Pwd(pwd)}, {'pwd': 0}, function (err, doc) {
+  User.findOne({ user: user, pwd: getMD5Pwd(pwd) }, _filter, function(
+    err,
+    doc
+  ) {
     if (!doc) {
-      return res.json({code: 1, errMsg: '用户名或密码错误', data: doc})
+      return res.json({ code: 1, errMsg: "用户名或密码错误", data: doc });
     }
-    return res.json({ code: 0, data: doc })
-  })
+    res.cookie("userId", doc._id);
+    return res.json({ code: 0, data: doc });
+  });
 })
+
 Router.post('/register', function (req, res) {
   const {user, pwd, type} = req.body
   console.log('req.body', req.body)
@@ -33,15 +40,31 @@ Router.post('/register', function (req, res) {
     if (doc) {
       return res.json({code: 1, errMsg: '用户名重复'})
     }
-    User.create({ user, pwd: getMD5Pwd(pwd), type }, function(err, doc) {
-      if (err) return res.json({ code: 1, errMsg: "后端出错了" });
-      return res.json({ code: 0 });
-    });
+    const currentUser = new User({ user, pwd: getMD5Pwd(pwd), type })
+    currentUser.save(function (err, doc) {
+      if (err) {
+        return res.json({code: 1, errMsg: '后端报错了'})
+      }
+      const {user, type, _id} = doc
+      res.cookie('userId', _id)
+      return res.json({code: 0, data: {user, type, _id}})
+    })
   })
 })
 
 Router.get('/info', function (req, res) {
-  return res.json({code: 1})
+  const {userId} = req.cookies
+  if (!userId) {
+    return res.json({code: 1})    
+  }
+  User.findOne({_id: userId}, _filter, function (err, doc) {
+    if (err) {
+      return res.json({code: 1, errMsg: '后端出错了'})
+    }
+    if (doc) {
+      return res.json({code: 0, data: doc})
+    }
+  })
 })
 
 module.exports = Router
