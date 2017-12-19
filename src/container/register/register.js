@@ -3,17 +3,13 @@ import Logo from '../../components/logo/logo'
 import { List, InputItem, Radio, WingBlank, WhiteSpace, Button } from 'antd-mobile'
 import { connect } from 'react-redux'
 import {register} from '../../redux/user.redux'
+import { Redirect } from 'react-router-dom'
 
 @connect(state => state.user, { register })
 class Register extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      user: null,
-      pwd: null,
-      repeatPwd: null,
-      type: "genuis"
-    };
+    this.state = { user: null, pwd: null, repeatPwd: null, type: "genius" };
     this.handleRegister = this.handleRegister.bind(this);
   }
   handleInput(key, val) {
@@ -23,18 +19,16 @@ class Register extends React.Component {
   }
 
   handleRegister() {
-    console.log("register.props", this.props);
-    const result = this.props.register(this.state);
-    console.log('result', result)
-    console.log(this.state);
+    this.props.register(this.state)
   }
 
   render() {
     const RadioItem = Radio.RadioItem;
-    return (
-      <div>
+    return <div>
+        {this.props.redirectTo ? <Redirect to={this.props.redirectTo} /> : null}
         <Logo />
         <List>
+          {this.props.errMsg ? <div>this.props.errMsg</div> : null}
           <InputItem onChange={val => this.handleInput("user", val)}>
             用户名
           </InputItem>
@@ -45,16 +39,10 @@ class Register extends React.Component {
             确认密码
           </InputItem>
           <WhiteSpace />
-          <RadioItem
-            checked={this.state.type === "genuis"}
-            onChange={val => this.handleInput("type", "genuis")}
-          >
+          <RadioItem checked={this.state.type === "genius"} onChange={val => this.handleInput("type", "genius")}>
             牛人
           </RadioItem>
-          <RadioItem
-            checked={this.state.type === "boss"}
-            onChange={val => this.handleInput("type", "boss")}
-          >
+          <RadioItem checked={this.state.type === "boss"} onChange={val => this.handleInput("type", "boss")}>
             BOSS
           </RadioItem>
         </List>
@@ -64,8 +52,7 @@ class Register extends React.Component {
             注册
           </Button>
         </WingBlank>
-      </div>
-    );
+      </div>;
   }
 }
 
