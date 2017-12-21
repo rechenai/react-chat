@@ -7,6 +7,8 @@ import { BrowserRouter, Route } from 'react-router-dom'
 
 import Login from './container/login/login'
 import Register from './container/register/register'
+import GeniusInfo from './container/geniusInfo/geniusInfo'
+import BossInfo from './container/bossInfo/bossInfo'
 import AuthRoute from './components/authrouter/authRouter'
 import reducers from './reducer'
 import './config'
@@ -20,15 +22,16 @@ function Boss() {
 }
 
 ReactDom.render(
-  (<Provider store={store}>
+  <Provider store={store}>
     <BrowserRouter>
       <div>
-        <AuthRoute></AuthRoute>
-        <Route path='/boss' component={Boss}></Route>
-        <Route path='/login' component={Login}></Route>
-        <Route path='/register' component={Register}></Route>
+        <AuthRoute />
+        <Route path="/geniusInfo" component={GeniusInfo} />
+        <Route path="/bossInfo" component={BossInfo} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
       </div>
     </BrowserRouter>
-  </Provider>),
-  document.getElementById('root')
-)
+  </Provider>,
+  document.getElementById("root")
+);

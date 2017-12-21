@@ -109,9 +109,6 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "jsConfig": {
-    "experimentalDecorators": true
-  },
   "proxy": "http://localhost:9093",
   "devDependencies": {
     "antd-mobile": "^2.1.1",

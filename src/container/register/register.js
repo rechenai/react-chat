@@ -23,7 +23,7 @@ class Register extends React.Component {
   }
 
   render() {
-    const RadioItem = Radio.RadioItem;
+    const RadioItem = Radio.RadioItem
     return <div>
         {this.props.redirectTo ? <Redirect to={this.props.redirectTo} /> : null}
         <Logo />
@@ -52,7 +52,7 @@ class Register extends React.Component {
             注册
           </Button>
         </WingBlank>
-      </div>;
+      </div>
   }
 }
 
