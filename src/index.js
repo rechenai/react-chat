@@ -13,14 +13,12 @@ import AuthRoute from './components/authrouter/authRouter'
 import Dashboard from './components/Dashboard/Dashboard'
 import reducers from './reducer'
 import './config'
+import './index.css'
 
 const store = createStore(reducers, compose(
     applyMiddleware(thunk),
     window.devToolsExtension?window.devToolsExtension():f=>f
 ))
-function Boss() {
-  return <h2>Boss</h2>
-}
 
 ReactDom.render(
   <Provider store={store}>
