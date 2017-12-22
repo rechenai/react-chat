@@ -16,6 +16,7 @@ class NavLinkBar extends React.Component {
       <TabBar>
         {navList.map(v=>(
           <TabBar.Item
+            className='fixed-footer'
             key={v.path}
             title={v.text}
             icon={{uri: require(`./img/${v.icon}.png`)}}

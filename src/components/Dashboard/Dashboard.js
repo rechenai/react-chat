@@ -5,13 +5,10 @@ import NavLinkBar from '../navlink/navlink'
 import {Route, Switch} from 'react-router-dom'
 import Boss from '../Boss/Boss'
 import Genius from '../Genius/Genius'
+import User from '../User/User'
 
 function Msg() {
   return <h2>Msg</h2>
-}
-
-function User() {
-  return <h2>User</h2>
 }
 
 @connect(
@@ -56,7 +53,7 @@ class Dashboard extends React.Component {
     ]
     return (
       <div>
-        <NavBar mode='dard'>{navList.find(v => v.path === pathname).text}</NavBar>
+        {pathname ? <NavBar mode='dard'>{navList.find(v => v.path === pathname).text}</NavBar> : null}
         <div style={{marginTop: 20}}>
           <Switch>
             {navList.map(v => {

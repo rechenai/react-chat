@@ -23,10 +23,8 @@ class AuthRoute extends Component {
           if (res.data.code === 0) {
             this.props.loadData(res.data.data)
           } else {
-            console.log("this.props.history", this.props.history)
             this.props.history.push('/login')
           }
-          console.log(res.data)
         }
       })
   }

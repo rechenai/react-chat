@@ -14,17 +14,20 @@ const initState = {
 const ERROR_MSG = 'ERROR_MSG'
 const LOAD_DATA = 'LOAD_DATA'
 const AUTH_SUCCESS = 'AUTH_SUCCESS'
+const LOGOUT = 'LOUGOUT'
 
 export function user(state=initState, action) {
   switch (action.type) {
     case AUTH_SUCCESS:
       return { ...state, redirectTo: utils.getRedirectPath(action.payload), errMsg: "", ...action.payload }
     case ERROR_MSG:
-      return { ...state, isAuth: false, errMsg: action.errMsg };
+      return { ...state, isAuth: false, errMsg: action.errMsg }
     case LOAD_DATA:
-      return { ...state, ...action.payload };
+      return { ...state, ...action.payload }
+    case LOGOUT: 
+      return {...initState, redirectTo: '/login'}  
     default:
-      return state;
+      return state
   }
 }
 
@@ -38,6 +41,10 @@ function authSuccess(data) {
 
 export function loadData(data) {
   return { type: LOAD_DATA , payload: data};
+}
+
+export function logoutSubmit(params) {
+  return { type: LOGOUT }
 }
 
 export function update (data) {
