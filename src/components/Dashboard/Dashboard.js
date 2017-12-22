@@ -2,10 +2,9 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {NavBar} from 'antd-mobile'
 import NavLinkBar from '../navlink/navlink'
+import {Route, Switch} from 'react-router-dom'
+import Boss from '../Boss/Boss'
 
-function Boss() {
-  return <h2>Boss</h2>
-}
 
 function Genius() {
   return <h2>Genius</h2>
@@ -20,13 +19,9 @@ function User() {
 }
 
 @connect(
-  state=>state,
-  {}
+  state=>state
 )
 class Dashboard extends React.Component {
-  constructor(props) {
-    super(props)
-  }
 
   render() {
     const {pathname} = this.props.location
@@ -65,7 +60,16 @@ class Dashboard extends React.Component {
     return (
       <div>
         <NavBar mode='dard'>{navList.find(v => v.path === pathname).text}</NavBar>
-        <NavLinkBar data={navList}></NavLinkBar>
+        <div style={{marginTop: 20}}>
+          <Switch>
+            {navList.map(v => {
+              return (
+                <Route key={v.path} path={v.path} component={v.component}></Route>
+              )
+            })}
+          </Switch>
+        </div>
+        <NavLinkBar data={navList} style={{position: 'fixed', bottom: 0}}></NavLinkBar>
       </div>
     )
   }

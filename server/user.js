@@ -12,11 +12,13 @@ function getMD5Pwd (pwd) {
 }
 
 Router.get('/list', function (req, res) {
+  const {type} = req.query
+  if (type) {
+    User.find({type: type}, function (err, doc) {
+      return res.json({code: 0, data: doc})
+    })
+  }
   // User.remove({}, function name(err, doc) {})
-  User.find({}, function (err, doc) {
-    if (err) return res.json({ code: 1, errMsg: '后端报错'})
-    return res.json(doc)
-  })
 })
 
 Router.post('/update', function (req, res) {
