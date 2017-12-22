@@ -39,7 +39,7 @@ class GeniusInfo extends React.Component {
         <InputItem onChange={v => this.onChange("title", v)}>
           求职岗位
         </InputItem>
-        <TextareaItem onChange={v => this.onChange("desc", v)} row={3} autoHeight title="个人见解" />
+        <TextareaItem onChange={v => this.onChange("desc", v)} row={3} autoHeight title="个人简介" />
         <WingBlank>
           <Button type="primary" onClick={() => this.props.update(this.state)}>
             保存
