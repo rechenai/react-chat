@@ -9,7 +9,10 @@ const server = require('http').Server(app)
 const io = require('socket.io')(server)
 
 io.on('connection', function(socket) {
-  console.log('connect success')
+  socket.on('sendMsg', function (data) {
+    console.log(data)
+    io.emit('received', data)
+  })
 })
 
 app.use(cookieParser())
