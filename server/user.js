@@ -2,6 +2,7 @@ const express = require('express')
 const Router = express.Router()
 const model = require('./model')
 const User = model.getModel('user')
+const Chat = model.getModel('chat')
 const utils = require('utility')
 
 const _filter = {'pwd': 0, '__v': 0}
@@ -19,6 +20,14 @@ Router.get('/list', function (req, res) {
     })
   }
   // User.remove({}, function name(err, doc) {})
+})
+
+Router.get('/chatMsgList', function(req, res) {
+  Chat.find({}, function (err, doc) {
+    if (!err) {
+      return res.json({code: 0, data: doc})
+    }
+  })
 })
 
 Router.post('/update', function (req, res) {

@@ -1,9 +1,15 @@
 import React from 'react'
 import io from 'socket.io-client'
 import {List, InputItem} from 'antd-mobile'
+import { connect } from 'react-redux'
+import { getMsgList } from '../../redux/chatMsg.redux'
 
 const socket = io('ws://localhost:9093')
 
+@connect(
+  state => state,
+  { getMsgList }
+)
 class Chat extends React.Component{
   constructor(props) {
     super(props)
@@ -13,11 +19,7 @@ class Chat extends React.Component{
     }
   }
   componentDidMount () {
-    console.log('componentDidMount')
-    socket.on('received', function(data) {
-      console.log('received')
-      console.log(data)
-    })
+    this.props.getMsgList()
   }
 
   onSubmit() {
@@ -32,6 +34,7 @@ class Chat extends React.Component{
           <div className='stick-footer'>
             <InputItem
               placeholder='请输入'
+              value={this.state.text}
               onChange={(v) => this.setState({text: v})}
               extra={<span onClick={() => {this.onSubmit()}}>发送</span>}>
             </InputItem>
