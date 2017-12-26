@@ -20,7 +20,7 @@ const models = {
     'read': {type: Boolean, require: true},
     'from': {type: String, require: true},
     'to': {type: String, require: true},
-    'msg': {type: String, require: true, default: ''},
+    'content': {type: String, require: true, default: ''},
     'createTime': {type: Number, default: new Date().getTime()}
   }
 }

@@ -23,10 +23,18 @@ Router.get('/list', function (req, res) {
 })
 
 Router.get('/chatMsgList', function(req, res) {
-  Chat.find({}, function (err, doc) {
-    if (!err) {
-      return res.json({code: 0, data: doc})
-    }
+  const user  = req.cookies.userid
+
+  User.find({}, function (err, doc) {
+    let users = {}
+    doc.forEach(v => {
+      users[v._id] = {name: v.user, avatar: v.avatar}
+    })
+    Chat.find({ '$or': [{ form: user }, { to: user }] }, function (err, doc) {
+      if (!err) {
+        return res.json({ code: 0, data: doc, users: users })
+      }
+    })
   })
 })
 

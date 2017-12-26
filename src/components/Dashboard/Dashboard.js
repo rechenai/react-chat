@@ -6,15 +6,23 @@ import {Route, Switch} from 'react-router-dom'
 import Boss from '../Boss/Boss'
 import Genius from '../Genius/Genius'
 import User from '../User/User'
+import {getMsgList, recvMsg} from '../../redux/chatMsg.redux'
 
 function Msg() {
   return <h2>Msg</h2>
 }
 
 @connect(
-  state=>state
+  state=>state,
+  {getMsgList, recvMsg}
 )
 class Dashboard extends React.Component {
+  componentDidMount() {
+    if (!this.props.chatlist.msgList.length) {
+      this.props.getMsgList()
+      this.props.recvMsg()
+    }
+  }
 
   render() {
     const {pathname} = this.props.location
@@ -53,7 +61,7 @@ class Dashboard extends React.Component {
     ]
     return (
       <div>
-        {pathname ? <NavBar mode='dard'>{navList.find(v => v.path === pathname).text}</NavBar> : null}
+        {pathname ? <NavBar mode='dark'>{navList.find(v => v.path === pathname).text}</NavBar> : null}
         <div style={{marginTop: 20}}>
           <Switch>
             {navList.map(v => {

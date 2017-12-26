@@ -30,6 +30,14 @@
 #chat-page .am-grid-text{
 	margin-top: 0;
 }
+#chat-page .am-grid-icon{
+  display: none;
+}
+
+#chae-page .am-grid-text{
+  margin-top: 0;
+}
+
 .stick-footer{
 	z-index:10;
 	position: fixed;
