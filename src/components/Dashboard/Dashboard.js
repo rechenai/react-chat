@@ -5,12 +5,10 @@ import NavLinkBar from '../navlink/navlink'
 import {Route, Switch} from 'react-router-dom'
 import Boss from '../Boss/Boss'
 import Genius from '../Genius/Genius'
+import Msg from '../Msg/Msg'
 import User from '../User/User'
 import {getMsgList, recvMsg} from '../../redux/chatMsg.redux'
 
-function Msg() {
-  return <h2>Msg</h2>
-}
 
 @connect(
   state=>state,

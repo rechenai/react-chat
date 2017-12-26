@@ -1,12 +1,12 @@
 import React from 'react'
 import {List, InputItem, NavBar, Icon, Grid} from 'antd-mobile'
 import { connect } from 'react-redux'
-import { getMsgList, sendMsg, recvMsg } from '../../redux/chatMsg.redux'
+import { getMsgList, sendMsg, recvMsg, readMsg } from '../../redux/chatMsg.redux'
 import { getChatId } from '../../redux/utils';
 
 @connect(
   state => state,
-  { getMsgList, sendMsg, recvMsg }
+  { getMsgList, sendMsg, recvMsg, readMsg }
 )
 class Chat extends React.Component{
   constructor(props) {
@@ -21,6 +21,13 @@ class Chat extends React.Component{
       this.props.getMsgList()
       this.props.recvMsg()
     }
+    const to = this.props.match.params.user
+    this.props.readMsg(to)
+  }
+
+  componentWillUnmount() {
+    const to = this.props.match.params.user
+    this.props.readMsg(to)
   }
 
   fixCarousel() {
@@ -69,12 +76,13 @@ class Chat extends React.Component{
                   (
                     <List key={v._id}>
                       <Item className='chat-me'
-                        extra={<img src={avatar} />}>{v.content}</Item>
+                        extra={<img src={avatar} />}>{v.content}
+                      </Item>
                     </List>
                   )     
         })}
-        <List>
-          <div className='stick-footer'>
+        <div className='stick-footer'>
+          <List>
             <InputItem
               placeholder='请输入'
               value={this.state.text}
@@ -86,13 +94,13 @@ class Chat extends React.Component{
                     this.setState({
                       showEmoji: !this.state.showEmoji
                     })
+                    this.fixCarousel()
                   }}>😃</span>
                   <span onClick={() => { this.onSubmit() }}>发送</span>
                 </div>
               }>
             </InputItem>
-          </div>
-        </List>
+          </List>
         
         {this.state.showEmoji ? 
         <Grid
@@ -106,8 +114,8 @@ class Chat extends React.Component{
             })
           }}>
         </Grid> :
-        null
-        }
+        null}
+        </div>
       </div>  
     )
   }
