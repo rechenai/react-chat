@@ -12,7 +12,7 @@ class Msg extends React.Component{
 
   render() {
     const Item = List.Item
-    const Brief = List.Brief
+    const Brief = Item.Brief
     const msgGroup = {}
     const userId = this.props.user._id
     const userInfo = this.props.chatlist.users
@@ -35,10 +35,9 @@ class Msg extends React.Component{
             return null
           }
           return (
-            <List>
+            <List key={lastItem._id}>
               <Item
                 extra={<Badge text={unreadNum}></Badge>}
-                key={lastItem._id}
                 arrow='horizontal'
                 onClick={() => {
                   this.props.history.push(`/chat/${targetId}`)
